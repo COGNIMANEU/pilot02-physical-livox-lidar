@@ -1,0 +1,21 @@
+services:
+  livox_driver:
+    build:
+      context: ./
+    container_name: livox_driver
+    networks:
+      - livox_net
+    environment:
+      - LAUNCH_FILE=livox_hub_launch.py
+
+  test_runner:
+    build:
+      context: ./test
+    depends_on:
+      - livox_driver
+    networks:
+      - livox_net
+
+networks:
+  livox_net:
+    driver: bridge      
