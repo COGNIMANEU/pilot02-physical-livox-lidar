@@ -11,7 +11,7 @@ The repository includes the following components:
 - Configuration files for the Livox Lidar device
 - Launch files for running the ROS 2 node
 - Docker setup for easy containerization
-- A Gazebo test environment to verify the topics published by the Livox driver
+- A docker-compose based test environment to verify the topics published by the Livox driver (lidar hardware required)
 
 ## Guidelines for build and test the component 
 
