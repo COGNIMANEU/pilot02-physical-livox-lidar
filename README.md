@@ -41,7 +41,7 @@ Test automation is integrated by docker-compose file:
 
 Run: 
 ```bash
-doicker-compose up --build
+docker-compose up --build
 ```
 
 In case lidar hardware is ready, you should see:
