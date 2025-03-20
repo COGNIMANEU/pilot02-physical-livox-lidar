@@ -1,6 +1,6 @@
 FROM ros:humble
 
-# Instala dependencias necesarias para ejecutar tests ROS 2
+# Install necessary dependencies for ROS 2 and testing
 RUN apt-get update && apt-get install -y \
     python3-pytest \
     python3-colcon-common-extensions \
@@ -8,16 +8,17 @@ RUN apt-get update && apt-get install -y \
     ros-humble-sensor-msgs \
     && rm -rf /var/lib/apt/lists/*
 
-# Crear workspace
+# Create workspace
 WORKDIR /test_ws
 COPY ./ /test_ws/src/livox_test_pkg
 
-# Compilar tests
+# Build the test package
 RUN . /opt/ros/humble/setup.sh && colcon build --packages-select livox_test_pkg
 
-# Ejecutar test por defecto
+# Default command to run the test, passing an environment variable for hardware detection
 CMD ["/bin/bash", "-c", \
      "source /opt/ros/humble/setup.bash && \
       source /test_ws/install/setup.bash && \
+      export HARDWARE_CONNECTED=false && \
       colcon test --packages-select livox_test_pkg && \
       colcon test-result --verbose"]

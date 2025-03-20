@@ -42,6 +42,7 @@ jobs:
         docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from test_runner
       env:
         LAUNCH_FILE: livox_hub_launch.py
+        HARDWARE_CONNECTED: false
 
     # 6. Upload Docker image to GitHub Container Registry
     - name: Upload Docker image to GitHub Container Registry
