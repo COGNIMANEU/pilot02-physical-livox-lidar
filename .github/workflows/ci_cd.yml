@@ -45,10 +45,10 @@ jobs:
         LAUNCH_FILE: livox_hub_launch.py
 
     # 6. Ensure lowercase repository name
-    - name: Ensure lowercase repository name
-      run: |
-        REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
-        echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
+    #- name: Ensure lowercase repository name
+    #  run: |
+    #    REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+    #    echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
 
     # 7. Upload Docker image to GitHub Container Registry
     #- name: Upload Docker image to GitHub Container Registry
