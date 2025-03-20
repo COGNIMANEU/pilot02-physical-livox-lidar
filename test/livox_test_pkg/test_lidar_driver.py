@@ -7,7 +7,7 @@ received = False
 
 class PointCloudTester(Node):
     def __init__(self):
-        super().__init__('pilot02-physical-livox-lidar_tester')
+        super().__init__('pilot02_physical_livox_lidar_tester')
         self.subscription = self.create_subscription(
             PointCloud2,
             '/livox/lidar',  # Make sure to use the correct topic from the driver
