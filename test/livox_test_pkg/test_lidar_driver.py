@@ -23,7 +23,6 @@ class PointCloudTester(Node):
         received = True
         self.get_logger().info('✅ PointCloud2 message received!')
 
-@pytest.mark.ros2
 def test_livox_lidar_pointcloud_publishing():
     global received
 

@@ -25,33 +25,26 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    # 3. Install Docker Compose (since the runner doesn't have it by default)
-    - name: Install Docker Compose
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker-compose
-
-    # 4. Build the Docker image
+    # 3. Build the Docker image
     - name: Build the Docker image
       run: |
         docker build . --file Dockerfile --tag livox_driver_image:$(date +%s)
 
-    # 5. Run the tests using docker-compose
+    # 4. Run the tests (assumes Docker Compose is used for integration tests)
     - name: Run the tests using docker-compose
       run: |
         docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from test_runner
       env:
         LAUNCH_FILE: livox_hub_launch.py
-        HARDWARE_CONNECTED: false
 
-    # 6. Upload Docker image to GitHub Container Registry
+    # 5. Upload Docker image to GitHub Container Registry
     - name: Upload Docker image to GitHub Container Registry
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker tag livox_driver_image:$(date +%s) ghcr.io/${{ github.repository }}/livox_driver_image:latest
-        docker push ghcr.io/${{ github.repository }}/livox_driver_image:latest
+        docker tag livox_driver_image:$(date +%s) ghcr.io/${{ github.repository }}:latest  # Tagging the image with lowercase repo name
+        docker push ghcr.io/${{ github.repository }}:latest  # Push image with lowercase repo name
 
-    # 7. Clean up (remove containers and images after test)
+    # 6. Clean up (remove containers and images after test)
     - name: Clean up
       run: |
         docker-compose down
