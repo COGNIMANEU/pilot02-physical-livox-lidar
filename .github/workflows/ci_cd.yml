@@ -35,7 +35,8 @@ jobs:
     # 4. Build the Docker image
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag livox_driver_image:$(date +%s)
+        IMAGE_TAG="livox_driver_image:$(date +%s)"
+        docker build . --file Dockerfile --tag $IMAGE_TAG
 
     # 5. Run the tests (assumes Docker Compose is used for integration tests)
     - name: Run the tests using docker-compose
@@ -55,11 +56,12 @@ jobs:
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         # Use the lowercase repository name stored in REPO_NAME
-        docker tag livox_driver_image:$(date +%s) ghcr.io/${{ env.REPO_NAME }}:latest
+        IMAGE_TAG="livox_driver_image:$(date +%s)"
+        docker tag $IMAGE_TAG ghcr.io/${{ env.REPO_NAME }}:latest
         docker push ghcr.io/${{ env.REPO_NAME }}:latest
 
     # 8. Clean up (remove containers and images after test)
     - name: Clean up
       run: |
         docker-compose down
-        docker rmi livox_driver_image:$(date +%s)
+        docker rmi $IMAGE_TAG
