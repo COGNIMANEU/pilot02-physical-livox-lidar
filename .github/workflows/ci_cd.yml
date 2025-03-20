@@ -51,11 +51,11 @@ jobs:
         echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
 
     # 7. Upload Docker image to GitHub Container Registry
-    - name: Upload Docker image to GitHub Container Registry
-      run: |
-        echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker tag livox_driver_image:latest ghcr.io/${{ env.REPO_NAME }}:latest
-        docker push ghcr.io/${{ env.REPO_NAME }}:latest
+    #- name: Upload Docker image to GitHub Container Registry
+    #  run: |
+    #    echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+    #    docker tag livox_driver_image:latest ghcr.io/${{ env.REPO_NAME }}:latest
+    #    docker push ghcr.io/${{ env.REPO_NAME }}:latest
 
     # 8. Clean up (remove containers and images after test)
     - name: Clean up
