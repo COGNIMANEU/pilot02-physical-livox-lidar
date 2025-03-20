@@ -48,8 +48,8 @@ jobs:
     - name: Upload Docker image to GitHub Container Registry
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker tag livox_driver_image:$(date +%s) ghcr.io/${{ github.repository }}:latest  # Tagging the image with lowercase repo name
-        docker push ghcr.io/${{ github.repository }}:latest  # Push image with lowercase repo name
+        docker tag livox_driver_image:$(date +%s) ghcr.io/${{ github.repository | toLowerCase }}:latest
+        docker push ghcr.io/${{ github.repository | toLowerCase }}:latest
 
     # 7. Clean up (remove containers and images after test)
     - name: Clean up
